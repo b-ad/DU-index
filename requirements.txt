@@ -1,0 +1,9 @@
+mysql-python
+docx
+pdfminer
+pyth
+tesseract
+pyocr
+wand
+pillow
+imagemagick@6
