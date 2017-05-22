@@ -4,9 +4,6 @@ import os
 import os.path
 
 import MySQLdb as mysqldb
-import mysql
-import mysql.connector
-from mysql.connector import errorcode
 
 import re
 
@@ -227,7 +224,6 @@ def UpdateDBwithDecisions(source_folder):
 
     ConnectToServer()
 
-    conn.db = DB_INFO['name']
 
     # get list of records in db
     print('Getting list of files in database...')
@@ -297,8 +293,6 @@ def regextract(regex_query, source_column, destination_column, sqlfilter=''):
     global c
 
     ConnectToServer()
-
-    conn.db = DB_INFO['name']
 
     if sqlfilter != '':
         sqlfilter = ' and ' + sqlfilter
