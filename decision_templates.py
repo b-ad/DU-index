@@ -19,7 +19,7 @@ decision_format = {
 
 
 ## Read regex parsers from parser.csv
-with open('parser.csv','rb') as parsefile:
+with open('source_data/parser.csv','rb') as parsefile:
   parser=csv.DictReader(parsefile)
   template_parsing={}
   for row in parser:
