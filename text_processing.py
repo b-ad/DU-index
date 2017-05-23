@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 # to convert DOC.  Must already have antiword installed directly on system
 from subprocess import Popen, PIPE
 
@@ -48,8 +50,10 @@ def convert_pdf_to_txt(file_path):
 
     try:
         if len(str) > 15:
+            print('')
             return str
         else:
+            print(', needs OCR...')
             raise ValueError
     except:
         tool = pyocr.get_available_tools()[0]
@@ -77,10 +81,10 @@ def convert_pdf_to_txt(file_path):
         return(ocr)
 
 
-def document_to_text(file_path):
+def get_text(file_path):
 
     try:
-        print(file_path[-4:])
+        print('Filetype:',file_path[-3:],end='')
         if file_path[-4:] == (".doc" or ".DOC"):
             cmd = ['antiword', file_path]
             p = Popen(cmd, stdout=PIPE)
@@ -110,4 +114,5 @@ def document_to_text(file_path):
             return 'Could not extract text from file (not recognized): ' + file_path
     except:
         return 'Could not extract text from file (extraction error): ' + file_path
+   
 
