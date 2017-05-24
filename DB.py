@@ -17,14 +17,14 @@ LOCAL_DB = {
     'name': 'board_decisions',
     'host': 'localhost',
     'user': 'root',
-    'pw': 'root'
+    'password': 'root'
 }
 
 AWS_DB = {
     'name': 'board_decisions',
     'host': 'decisions-db.cqf5j25daolp.us-west-1.rds.amazonaws.com',
     'user': 'dbuser',
-    'pw': 'dbuserpassword'
+    'password': 'dbuserpassword'
 }
 
 # Select working database
@@ -36,16 +36,34 @@ DB_INFO = LOCAL_DB
 # METADATA EXTRACTION FUNCTIONS
 #
 
+def RegexRedux(query,text): #query can be two sequential queries separated by ';'
+
+    queries=query.split(";")
+
+    for query in queries:
+        rt = re.search(query, text)
+        if not rt:
+            return None
+        elif len(rt.groups())>0:
+            #Obtain the last result group that isn't "None"
+            rt=[group for group in rt.groups() if group is not None]
+            text=rt[-1]
+        else:
+            text=rt.group(0)
+
+    # Double-up single quotes so that it doesn't confuse SQL and
+    # remove whitespace
+    text = re.sub("'", "''", text).strip()
+
+    return text
+
+
 def regextract(regex_query, source_column, destination_column, sqlfilter=''):
 
     conn = mysqldb.connect(host=DB_INFO['host'], user=DB_INFO[
-                                   'user'], passwd=DB_INFO['pw'],db=DB_INFO['name'])
+                                   'user'], passwd=DB_INFO['password'],db=DB_INFO['name'])
     c = conn.cursor()
 
-    if sqlfilter != '':
-        sqlfilter = ' and ' + sqlfilter
-    else:
-        pass
 
     # create column if it doesn't exist already
     try:
@@ -54,15 +72,33 @@ def regextract(regex_query, source_column, destination_column, sqlfilter=''):
     except:
         pass
 
+    #results variables:
+    total_records=0 # all records
+    start_amount=0 # records that need to be filled
+    extracted_amount=0 #records that pulled a result
+
+
+    #make list of all records being reviewed
+    c.execute('select count(*) from Decisions where {}'.format(sqlfilter))
+    total_records = c.fetchone()[0]
+
+    if sqlfilter != '':
+        f_sqlfilter = ' and ' + sqlfilter
+    else:
+        f_sqlfilter = sqlfilter
+
     # make list of records where that column's cell is empty and where sql
     # filter is satisfied
     c.execute('select id from Decisions where {} is null and {} is not null {}'
-              .format(destination_column, source_column, sqlfilter))
+              .format(destination_column, source_column, f_sqlfilter))
     empty_records = [i[0] for i in c.fetchall()]
     start_amount = len(empty_records)
 
-    # for each row, run regex on the text
+    print(sqlfilter,"--",'Total:',str(total_records)+'.','Blanks:',str(start_amount)+'.','Added:',end='')
 
+
+
+    # for each row, run regex on the text
     for record in empty_records:
         # Get source text
         c.execute("select {} from Decisions where id ='{}'"
@@ -71,31 +107,23 @@ def regextract(regex_query, source_column, destination_column, sqlfilter=''):
             targettext = c.fetchone()[0]
 
             # Apply search
-            rt = re.search(regex_query, targettext)
+            match=RegexRedux(regex_query,targettext)
 
-            if rt:
-
-                #Obtain the last result group that isn't "None"
-                rt=[group for group in rt.groups() if group is not None]
-                rt=rt[-1]
-
-                # Double-up single quotes so that it doesn't confuse SQL and
-                # remove whitespace
-                rt = re.sub("'", "''", rt).strip()
-
-                # insert results back into table
+            # insert results back into table
+            if match:
+                extracted_amount+=1
                 c.execute("update Decisions set {} = '{}' where id = '{}'"
-                          .format(destination_column, rt, record))
+                          .format(destination_column, match, record))
         except:
             continue
 
         conn.commit()
-    print(start_amount,'extracted from ',destination_column," and ",sqlfilter)
+    print(extracted_amount)
     # close database
     c.close()
     conn.close()
 
-def ExtractParse(destination_column):
+def ExtractColumn(destination_column):
     
     #get service,branch,years where there is a formula for the column
     target=[]
@@ -110,7 +138,6 @@ def ExtractParse(destination_column):
     #apply the regex formula to those years
     for s,b,y in target:
         sq="Branch = '"+s+"' and Board = '"+b+"' and Year ="+str(y)
-
         regextract(template_parsing[decision_format[s,b](y)][destination_column],'decision_text',destination_column,sq)
 
 #ExtractParse('Original_Char')
@@ -123,8 +150,8 @@ def ExtractAll():
         fields=parser.fieldnames[1:]
 
     for field in fields:
-        print('Extracting field:',field,'...')
-        ExtractParse(field)
+        print('Extracting field:',field)
+        ExtractColumn(field)
 
 
 

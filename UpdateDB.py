@@ -37,7 +37,7 @@ DB_INFO = LOCAL_DB
 def InitializeDB():
 
     conn = mysqldb.connect(host=DB_INFO['host'], user=DB_INFO[
-                                   'user'], passwd=DB_INFO['pw'],db=DB_INFO['name'])
+                                   'user'], passwd=DB_INFO['pw'],db=DB_INFO['name'],use_unicode=True, charset="utf8")
     c = conn.cursor()
 
     # Create database if necessary.
@@ -82,8 +82,9 @@ def UpdateDBwithDecisions():
 
     #connect to database
     conn = mysqldb.connect(host=DB_INFO['host'], user=DB_INFO[
-                                   'user'], passwd=DB_INFO['pw'],db=DB_INFO['name'])
+                                   'user'], passwd=DB_INFO['pw'],db=DB_INFO['name'],use_unicode=True, charset="utf8")
     c = conn.cursor()
+
 
     # get list of files in mirror
     print('Making list of files in mirror...')
@@ -118,14 +119,15 @@ def UpdateDBwithDecisions():
         doctext = get_text(file_path)
 
         # add new record to db
-        try:
-            c.execute("insert into Decisions (local_filepath,relative_path,filename,decision_text) values (%s,%s,%s,%s)",
+        #try:
+        c.execute("insert into Decisions (local_filepath,relative_path,filename,decision_text) values (%s,%s,%s,%s)",
                       (file_path, file_rel_path, file_name, doctext))
-            print(len(get_text),'chars uploaded.')
-        except:
-            c.execute("insert into Decisions (local_filepath,relative_path,filename,decision_text) values (%s,%s,%s,%s)",
-                      (file_path, file_rel_path, file_name, "Load error"))
-            print('Load error')
+        print(len(doctext),'chars uploaded.')
+        #except:
+        #    c.execute("insert into Decisions (local_filepath,relative_path,filename,decision_text) values (%s,%s,%s,%s)",
+        #              (file_path, file_rel_path, file_name, "Load error"))
+        #    print('Load error')
+        
         conn.commit()
 
         file_list.remove(file_path)
