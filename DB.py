@@ -1,7 +1,5 @@
 
 from __future__ import print_function
-import os
-import os.path
 import re
 import MySQLdb as mysqldb
 import csv
@@ -128,7 +126,7 @@ def ExtractColumn(destination_column):
     #get service,branch,years where there is a formula for the column
     target=[]
     for s,b in decision_format.keys():
-        for y in range(1999,2017):
+        for y in range(1995,2017):
             try:
                 if template_parsing[decision_format[s,b](y)][destination_column] != '':
                     target.append((s,b,y))
@@ -140,7 +138,7 @@ def ExtractColumn(destination_column):
         sq="Branch = '"+s+"' and Board = '"+b+"' and Year ="+str(y)
         regextract(template_parsing[decision_format[s,b](y)][destination_column],'decision_text',destination_column,sq)
 
-#ExtractParse('Original_Char')
+ExtractColumn('Outcome_char')
 
 def ExtractAll():
 
@@ -155,7 +153,8 @@ def ExtractAll():
 
 
 
-ExtractAll()
+
+#ExtractAll()
 
 def Branch():
     regextract("AF|ARMY|CG|Navy|Marines", "local_filepath", "Branch")
