@@ -3,6 +3,7 @@ from __future__ import print_function
 import os
 import os.path
 import MySQLdb as mysqldb
+from UpdateMirror import UpdateMirror
 
 from text_processing import get_text, convert_pdf_to_txt
 
@@ -44,12 +45,12 @@ def InitializeDB():
 
     try:
         conn.db = DB_INFO['name']
-    except mysql.connector.Error as err:
+    except MySQLdb.connector.Error as err:
         if err.errno == errorcode.ER_BAD_DB_ERROR:
             try:
                 c.execute("CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(
                     DB_INFO['name']))
-            except mysql.connector.Error as err:
+            except mysqldb.connector.Error as err:
                 print("Failed creating database: {}".format(err))
                 exit(1)
             conn.db = DB_INFO['name']
@@ -76,7 +77,7 @@ def InitializeDB():
     conn.close()
 
 
-def UpdateDBwithDecisions():
+def UpdateDBfromMirror():
 
     source_folder="/Users/bradfordadams/Cloud Drives/Dropbox/Decisions/boards.law.af.mil"
 
@@ -138,5 +139,7 @@ def UpdateDBwithDecisions():
     conn.close()
 
 #InitializeDB() #Commented about b/c only need it when first creating DB
-UpdateDBwithDecisions()
+UpdateMirror()
+UpdateDBfromMirror()
+
 
