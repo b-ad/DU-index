@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 import re
 import MySQLdb as mysqldb
@@ -141,7 +140,7 @@ def ExtractColumn(destination_column):
         regextract(template_parsing[decision_format[s, b](y)][
                    destination_column], 'decision_text', destination_column, sq)
 
-ExtractColumn('Outcome_Other')
+#ExtractColumn('Outcome_Other')
 
 
 def ExtractAll():
