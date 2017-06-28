@@ -1,19 +1,19 @@
-Key,Original_Char,Original_NR,Time_Service,Discharge_date,Awards,Facts_Circums,Disciplinary_Action,Contentions,Discussion,Outcome_NR,Outcome_char
-A,(?i)Discharge Received:\s+(\S[^\n]*)\s+Date|Facts and Circumstances:\n.*?(general|other than honorable|dishonorable|honorable|uncharacterized|bad conduct).*?\n,SPD/RE Code:\s+(\S[\s\S]*)[\n\r]e,Total Service:\s+([^\n\r]+),Date of Discharge:\s+([^\n\r]+)\n,Decorations/Awards:\s+([^\n\r]+)\n,(EVIDENCE OBTAINED[\s\S]*)REGULATORY,,STATEMENT:[\n\r]\s+(\S[\s\S]*?\S)\s+DISCHARGE,RECOMMENDATION:\s+([\s\S]*?)\s+SUMMARY,Reason[^\n]*([A-Z][^\n0-9]*):\s+[345],"Change characterization to:[^\n\S]*([\S ]*)|(?is)Board Vote:.{0,100}Character[^\n]*(no.change)\s*[345]|Board Vote:.{0,100}Character[^\n]*(change)\s*[345]"
-B,(?i)Discharge Received:\s+(\S[^\n]*)\s+Date|Facts and Circumstances:\n.*?(general|other than honorable|dishonorable|honorable|uncharacterized|bad conduct).*?\n,Reason:\s+?([^\n\r]*)\s+?RE,Total Service:\s+([^\n\r]+),"Discharge Received[^\n\r]*?Date:\s+([0-9]{6,8})",Decorations/Awards:\s+([^\n\r]+),a\.\s+Facts and Circumstances:\n([\s\S]*?)b\.,(Article 15s[\s\S]*)IV\.,Issues:([\S\s]*?)\n\s+II\.,Rationale:\s+?(\S[\s\S]*?)\n\s+?VII\.,(?i)Reason[^\n]*([A-Z][^/n0-9]*?)\s[345],"IX\.[\s\S]{0,400}Character[^\n]*?([^0-9\n]*)[345]|(?is)Board Decision.{0,100}Character[^\n]*(no.change)\s*[345]|Board Decision.{0,100}Character[^\n]*(change)\s*[345]"
-C,(?i)Discharge Received:\s+(\S[^\n]*)\s+Date|Facts and Circumstances:\n.*?(general|other than honorable|dishonorable|honorable|uncharacterized|bad conduct).*?\n,Reason:\s+?([^\n\r]*)\s+?RE,Total Service:\s+([^\n\r]+),"Discharge Received[^\n\r]*?Date:\s+([0-9]{6,8})",Decorations/Awards:\s+([^\n\r]+),a\.\s+Facts and Circumstances:\n([\s\S]*?)b\.,(Article 15s[\s\S]*)IV\.,Issues:([\S\s]*?)\n\s+II\.,Rationale:\s+?(\S[\s\S]*?)\n\s+?VII\.,"(?is)voting record:.{0,100}(no.change)\s*[345][^\n]*Reason|voting record:.{0,100}(change)\s*[345][^\n]*Reason","(?is)Board Decision.{0,100}Character[^\n]*(no.change)\s*[345]|Board Decision.{0,100}Character[^\n]*(change)\s*[345]"
-D,Character of Discharge:\s+(\S[^\n]*):characterization of service\):\s+(\S[^\n]*),b.\s+Reason:\s+([^\n]*),Length of Service.*\n\s+([^\n]*),"(?i)Date of Discharge[^\n]*([0-9]{6,8})","III[\s\S]*?(2\.[\s\S]*?)3\.;\b[A-Z]{3,5}\b",IV[\s\S]*?(a\.[\s\S]*?)2\.,5\.([\s\S]*?)8\.,SECTION B[\s\S]*?1.*\n([\S\s]*?)\n2,2[^\n]*equity:([\s\S]*?)3\.,(?i)Voting record:[^\n]*(no.change).*\n.*?Reason\s+[12]|Voting record:\s*(Change).*\n.*?Reason\s+[345],(?is)Voting record:[^\n]*(no.change).*?Characterization\s+[012]|Voting record:\s*(Change).*?Characterization[\s]+[345]
-E,,,,,,,,,,,
-F,,,,,,,,,,,
-G,,,,,,,,,,,
-H,,,,,,,,,,,
-I,,,,,,,,,,,
-J,,,,,,,,,,,
-K,,,,,,,,,,,
-L,,,,,,,,,,,
-M,,,,,,,,,,,
-N,,,,,,,,,,,
-O,,,,,,,,,,,
-P,,,,,,,,,,,
-Q,,,,,,,,,,,
-R,,,,,,,,,,,
+Key,Original_Char,Original_NR,Time_Service,Discharge_date,Awards,Facts_Circums,Disciplinary_Action,Contentions,Discussion,Outcome_NR,Outcome_char,Outcome_Other
+A,(?i)Discharge Received:\s+(\S[^\n]*)\s+Date|Facts and Circumstances:\n.*?(general|other than honorable|dishonorable|honorable|uncharacterized|bad conduct).*?\n,SPD/RE Code:\s+(\S[\s\S]*)[\n\r]e,Total Service:\s+([^\n\r]+),Date of Discharge:\s+([^\n\r]+)\n,Decorations/Awards:\s+([^\n\r]+)\n,(EVIDENCE OBTAINED[\s\S]*)REGULATORY,,STATEMENT:[\n\r]\s+(\S[\s\S]*?\S)\s+DISCHARGE,RECOMMENDATION:\s+([\s\S]*?)\s+SUMMARY,Reason[^\n]*([A-Z][^\n0-9]*):\s+[345],"Change characterization to:[^\n\S]*([\S ]*)|(?is)Board Vote:.{0,100}Character[^\n]*(no.change)\s*[345]|Board Vote:.{0,100}Character[^\n]*(change)\s*[345]",
+B,(?i)Discharge Received:\s+(\S[^\n]*)\s+Date|Facts and Circumstances:\n.*?(general|other than honorable|dishonorable|honorable|uncharacterized|bad conduct).*?\n,Reason:\s+?([^\n\r]*)\s+?RE,Total Service:\s+([^\n\r]+),"Discharge Received[^\n\r]*?Date:\s+([0-9]{6,8})",Decorations/Awards:\s+([^\n\r]+),a\.\s+Facts and Circumstances:\n([\s\S]*?)b\.,(Article 15s[\s\S]*)IV\.,Issues:([\S\s]*?)\n\s+II\.,Rationale:\s+?(\S[\s\S]*?)\n\s+?VII\.,(?i)Reason[^\n]*([A-Z][^/n0-9]*?)\s[345],"IX\.[\s\S]{0,400}Character[^\n]*?([^0-9\n]*)[345]|(?is)Board Decision.{0,100}Character[^\n]*(no.change)\s*[345]|Board Decision.{0,100}Character[^\n]*(change)\s*[345]",
+C,(?i)Discharge Received:\s+(\S[^\n]*)\s+Date|Facts and Circumstances:\n.*?(general|other than honorable|dishonorable|honorable|uncharacterized|bad conduct).*?\n,Reason:\s+?([^\n\r]*)\s+?RE,Total Service:\s+([^\n\r]+),"Discharge Received[^\n\r]*?Date:\s+([0-9]{6,8})",Decorations/Awards:\s+([^\n\r]+),a\.\s+Facts and Circumstances:\n([\s\S]*?)b\.,(Article 15s[\s\S]*)IV\.,Issues:([\S\s]*?)\n\s+II\.,Rationale:\s+?(\S[\s\S]*?)\n\s+?VII\.,"(?is)voting record:.{0,100}(no.change)\s*[345][^\n]*Reason|voting record:.{0,100}(change)\s*[345][^\n]*Reason","(?is)Board Decision.{0,100}Character[^\n]*(no.change)\s*[345]|Board Decision.{0,100}Character[^\n]*(change)\s*[345]",
+D,Character of Discharge:\s+(\S[^\n]*):characterization of service\):\s+(\S[^\n]*),b.\s+Reason:\s+([^\n]*),Length of Service.*\n\s+([^\n]*),"(?i)Date of Discharge[^\n]*([0-9]{6,8})","III[\s\S]*?(2\.[\s\S]*?)3\.;\b[A-Z]{3,5}\b",IV[\s\S]*?(a\.[\s\S]*?)2\.,5\.([\s\S]*?)8\.,SECTION B[\s\S]*?1.*\n([\S\s]*?)\n2,2[^\n]*equity:([\s\S]*?)3\.,(?i)Voting record:[^\n]*(no.change).*\n.*?Reason\s+[12]|Voting record:\s*(Change).*\n.*?Reason\s+[345],(?is)Voting record:[^\n]*(no.change).*?Characterization\s+[012]|Voting record:\s*(Change).*?Characterization[\s]+[345],
+E,,,,,,,,(?s)AND EVIDENCE:(.*?)2\.,,,,"(?s)VOTE.{0,500}[a-zA-Z]+[^\na-zA-Z]+[a-zA-Z]+[^\na-zA-Z]+(GRANT|DENY)"
+F,,,,,,,,,,,,
+G,,,,,,,,,,,,
+H,,,,,,,,,,,,
+I,,,,,,,,,,,,
+J,,,,,,,,,,,,
+K,,,,,,,,,,,,
+L,,,,,,,,,,,,
+M,,,,,,,,,,,,
+N,,,,,,,,,,,,
+O,,,,,,,,,,,,
+P,,,,,,,,,,,,
+Q,,,,,,,,,,,,
+R,,,,,,,,,,,,
