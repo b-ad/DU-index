@@ -2,7 +2,7 @@
 from __future__ import print_function
 import os
 import os.path
-from mysql import connector
+import MySQLdb as mysqldb
 import httplib2
 import urllib
 from urlparse import urljoin
@@ -24,9 +24,9 @@ LOCAL_DB = {
 
 AWS_DB = {
     'name': 'board_decisions',
-    'host': 'decisions-db.cqf5j25daolp.us-west-1.rds.amazonaws.com',
-    'user': 'dbuser',
-    'pw': 'dbuserpassword'
+    'host': '',
+    'user': '',
+    'pw': ''
 }
 
 # Select working database
@@ -40,7 +40,7 @@ DB_INFO = LOCAL_DB
 
 def InitializeDB():
 
-    conn = connector.connect(host=DB_INFO['host'], user=DB_INFO[
+    conn = mysqldb.connect(host=DB_INFO['host'], user=DB_INFO[
         'user'], passwd=DB_INFO['pw'], db=DB_INFO['name'], use_unicode=True, charset="utf8")
     c = conn.cursor()
 
@@ -61,9 +61,10 @@ def InitializeDB():
             print(err)
             exit(1)
 
+
     # create Decisions table if it doesn't exist
-    c.execute(
-        'CREATE TABLE IF NOT EXISTS Decisions (id INT(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))')
+    c.execute('CREATE TABLE IF NOT EXISTS Decisions (id INT(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))')
+
 
     # create columns if they don't exist
 
@@ -80,12 +81,10 @@ def InitializeDB():
     conn.close()
 
 
-def UpdateDB():
-
-    source_folder = "/Users/bradfordadams/Cloud Drives/Dropbox/Decisions/boards.law.af.mil"
+def UpdateDB(source_folder = "/Users/bradfordadams/Cloud Drives/Dropbox/Decisions/boards.law.af.mil"):
 
     # connect to database
-    conn = connector.connect(host=DB_INFO['host'], user=DB_INFO['user'], passwd=DB_INFO[
+    conn = mysqldb.connect(host=DB_INFO['host'], user=DB_INFO['user'], passwd=DB_INFO[
                              'pw'], db=DB_INFO['name'], use_unicode=True, charset="utf8")
     c = conn.cursor()
 
@@ -207,3 +206,5 @@ def UpdateMirror(rootlocal="/Users/bradfordadams/Cloud Drives/Dropbox/Decisions/
                   os.path.join(rootlocal, file), "failed to download.")
     print(len(missing_list) - fails, 'new files downloaded to local mirror.')
 
+
+UpdateDB()

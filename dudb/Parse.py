@@ -19,13 +19,12 @@ LOCAL_DB = {
 
 AWS_DB = {
     'name': 'board_decisions',
-    'host': 'decisions-db.cqf5j25daolp.us-west-1.rds.amazonaws.com',
-    'user': 'dbuser',
-    'password': 'dbuserpassword'
+    'host': '',
+    'user': '',
+    'password': ''
 }
 
 # Select working database
-
 DB_INFO = LOCAL_DB
 
 

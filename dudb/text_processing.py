@@ -253,8 +253,7 @@ def get_text(file_path):
     try:
         print('Filetype:',file_path[-3:],end='')
         if file_path[-4:] == (".doc" or ".DOC"):
-            cmd = ['antiword', file_path]
-            p = Popen(cmd, stdout=PIPE)
+            p = Popen(['osascript', '-'] + args, stdout=PIPE)
             stdout, stderr = p.communicate()
             return stdout.decode('utf8', 'ignore')
         elif file_path[-5:] == (".docx" or "DOCX"):
