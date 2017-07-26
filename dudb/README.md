@@ -1,5 +1,10 @@
 
-This is a python package to create and develop a database of discharge upgrade and record correction decisions.
+# Description
+
+This is a python 2.7 package to create and develop a database of discharge upgrade and record correction decisions.  It draws from decisions at boards.law.af.mil.
+
+
+# Functions
 
 1. Create mirror
 
